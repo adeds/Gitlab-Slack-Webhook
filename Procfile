@@ -1,1 +1,1 @@
-web: ./build/install/ktor-webhook-sample-sample/bin/ktor-webhook-sample
+web: ./build/install/id.ade.ktorwebhooksample/bin/id.ade.ktorwebhooksample
