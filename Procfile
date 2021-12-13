@@ -1,0 +1,1 @@
+web: ./build/install/ktor-webhook-sample-sample/bin/ktor-webhook-sample
