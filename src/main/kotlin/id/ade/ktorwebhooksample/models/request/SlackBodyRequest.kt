@@ -11,12 +11,20 @@ data class SlackBodyRequest(
 ) {
     @Serializable
     data class Block(
+        @SerialName("type")
+        val type: String? = null,
+
+        // for field type
         @SerialName("fields")
         val fields: List<Field?>? = null,
+
+        //for text type
         @SerialName("text")
         val text: Text? = null,
-        @SerialName("type")
-        val type: String? = null
+
+        //for accessory type
+        @SerialName("accessory")
+        val accessory: Accessory? = null,
     ) {
         @Serializable
         data class Field(
@@ -31,19 +39,27 @@ data class SlackBodyRequest(
             @SerialName("text")
             val text: String,
             @SerialName("emoji")
-            val emoji: Boolean,
+            val emoji: Boolean? = null,
             @SerialName("type")
-            val type: String
+            val type: String,
+        )
+
+        @Serializable
+        data class Accessory(
+            @SerialName("type")
+            val type: String,
+            @SerialName("image_url")
+            val imageUrl: String? = null,
+            @SerialName("alt_text")
+            val altText: String? = null,
         )
     }
-}
 
-sealed class BlockType {
-    object Header : BlockType() {
-        override fun toString() = "header"
-    }
-
-    object Section : BlockType() {
-        override fun toString() = "section"
+    companion object {
+        const val HEADER_TYPE = "header"
+        const val SECTION_TYPE = "section"
+        const val IMAGE_TYPE = "image"
+        const val MARKDOWN_TYPE = "mrkdwn"
+        const val PLAIN_TEXT_TYPE = "plain_text"
     }
 }

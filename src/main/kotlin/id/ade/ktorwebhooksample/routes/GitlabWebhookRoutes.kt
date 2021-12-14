@@ -1,13 +1,15 @@
 package id.ade.ktorwebhooksample.routes
 
 import id.ade.ktorwebhooksample.models.Message
-import id.ade.ktorwebhooksample.models.request.BlockType
+import id.ade.ktorwebhooksample.models.receive.GitlabMergeRequestReceiver
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest
+import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.HEADER_TYPE
+import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.IMAGE_TYPE
+import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.MARKDOWN_TYPE
+import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.SECTION_TYPE
 import id.ade.ktorwebhooksample.utils.Constant
 import id.ade.ktorwebhooksample.utils.toJson
-import io.ktor.application.application
 import io.ktor.application.call
-import io.ktor.application.log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
@@ -19,13 +21,11 @@ import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.Parameters
 import io.ktor.http.contentType
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
 import io.ktor.locations.post
 import io.ktor.request.receive
-import io.ktor.request.receiveText
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.util.InternalAPI
@@ -45,7 +45,7 @@ class GitlabWebhookRoute
 fun Route.gitlabWebhook() {
     post<GitlabWebhookRoute> {
         coroutineScope {
-            application.log.info(call.receiveText())
+            val gitlabMergeRequestReceiver = call.receive<GitlabMergeRequestReceiver>()
             val client = createClient()
             kotlin.runCatching {
                 val response = async(Dispatchers.IO) {
@@ -54,23 +54,34 @@ fun Route.gitlabWebhook() {
                         val requestBody = SlackBodyRequest(
                             listOf(
                                 SlackBodyRequest.Block(
-                                    type = BlockType.Header.toString(),
+                                    type = SECTION_TYPE,
                                     text = SlackBodyRequest.Block.Text(
-                                        text = "From Custom",
-                                        emoji = true,
-                                        type = "plain_text"
+                                        text = "<${gitlabMergeRequestReceiver.objectAttributes?.url}|${gitlabMergeRequestReceiver.objectAttributes?.title}>",
+                                        type = MARKDOWN_TYPE
                                     )
                                 ),
                                 SlackBodyRequest.Block(
-                                    type = BlockType.Section.toString(), fields = listOf(
+                                    type = SECTION_TYPE, fields = listOf(
                                         SlackBodyRequest.Block.Field(
-                                            text = "*Type:*\nThis is from webhook",
-                                            type = "mrkdwn"
+                                            text = "*Status:*\n${gitlabMergeRequestReceiver.eventType}",
+                                            type = MARKDOWN_TYPE
                                         ),
                                         SlackBodyRequest.Block.Field(
-                                            text = "*Created by:*\n<https://github.com/adeds|Ade Dyas>",
-                                            type = "mrkdwn"
+                                            text = "*Created by:*\n<https://gitlab.com/${gitlabMergeRequestReceiver.user?.username}|${gitlabMergeRequestReceiver.user?.name}>",
+                                            type = MARKDOWN_TYPE
                                         ),
+                                    )
+                                ),
+                                SlackBodyRequest.Block(
+                                    type = SECTION_TYPE,
+                                    text = SlackBodyRequest.Block.Text(
+                                        text = "*Description:*\n${gitlabMergeRequestReceiver.objectAttributes?.description}",
+                                        type = MARKDOWN_TYPE
+                                    ),
+                                    accessory = SlackBodyRequest.Block.Accessory(
+                                        type = IMAGE_TYPE,
+                                        imageUrl = gitlabMergeRequestReceiver.user?.avatarUrl,
+                                        altText = "avatar"
                                     )
                                 )
                             )

@@ -16,6 +16,7 @@ import io.ktor.gson.gson
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Locations
 import io.ktor.routing.routing
+import io.ktor.serialization.json
 import io.ktor.server.netty.EngineMain
 import io.ktor.util.KtorExperimentalAPI
 
@@ -28,8 +29,7 @@ fun Application.module() {
     install(Locations) {
     }
     install(ContentNegotiation) {
-        gson {
-        }
+        json()
     }
     routing {
         gitlabWebhook()
