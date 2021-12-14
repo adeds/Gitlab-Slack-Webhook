@@ -5,7 +5,9 @@ import id.ade.ktorwebhooksample.models.request.BlockType
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest
 import id.ade.ktorwebhooksample.utils.Constant
 import id.ade.ktorwebhooksample.utils.toJson
+import io.ktor.application.application
 import io.ktor.application.call
+import io.ktor.application.log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
@@ -17,10 +19,13 @@ import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.Parameters
 import io.ktor.http.contentType
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
 import io.ktor.locations.post
+import io.ktor.request.receive
+import io.ktor.request.receiveText
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.util.InternalAPI
@@ -40,6 +45,7 @@ class GitlabWebhookRoute
 fun Route.gitlabWebhook() {
     post<GitlabWebhookRoute> {
         coroutineScope {
+            application.log.info(call.receiveText())
             val client = createClient()
             kotlin.runCatching {
                 val response = async(Dispatchers.IO) {
