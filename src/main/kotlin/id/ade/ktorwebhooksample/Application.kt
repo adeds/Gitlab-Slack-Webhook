@@ -31,16 +31,7 @@ fun Application.module() {
         gson {
         }
     }
-    val client = HttpClient(CIO) {
-        install(Logging) {
-            logger = Logger.DEFAULT
-            level = LogLevel.ALL
-        }
-        install(JsonFeature) {
-            serializer = KotlinxSerializer()
-        }
-    }
     routing {
-        gitlabWebhook(client)
+        gitlabWebhook()
     }
 }
