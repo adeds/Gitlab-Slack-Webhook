@@ -1,57 +1,40 @@
 package id.ade.ktorwebhooksample.models.request
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class SlackBodyRequest(
-    @SerialName("blocks")
     val blocks: List<Block?>? = null
 ) {
-    @Serializable
     data class Block(
-        @SerialName("type")
         val type: String? = null,
 
         // for field type
-        @SerialName("fields")
         val fields: List<Field?>? = null,
 
         //for text type
-        @SerialName("text")
         val text: Text? = null,
 
         //for accessory type
-        @SerialName("accessory")
-        val accessory: Accessory? = null,
+        val accessory: Accessory? = null
     ) {
-        @Serializable
         data class Field(
-            @SerialName("text")
             val text: String,
-            @SerialName("type")
             val type: String
         )
 
-        @Serializable
         data class Text(
-            @SerialName("text")
             val text: String,
-            @SerialName("emoji")
             val emoji: Boolean? = null,
-            @SerialName("type")
-            val type: String,
+            val type: String
         )
 
-        @Serializable
         data class Accessory(
-            @SerialName("type")
             val type: String,
-            @SerialName("image_url")
+            @SerializedName("image_url")
             val imageUrl: String? = null,
-            @SerialName("alt_text")
-            val altText: String? = null,
+            @SerializedName("alt_text")
+            val altText: String? = null
         )
     }
 

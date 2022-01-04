@@ -1,296 +1,283 @@
 package id.ade.ktorwebhooksample.models.receive
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class GitlabMergeRequestReceiver(
-    @SerialName("assignees")
+    @SerializedName("assignees")
     val assignees: List<Assignee?>? = null,
-    @SerialName("changes")
+    @SerializedName("changes")
     val changes: Changes? = null,
-    @SerialName("event_type")
+    @SerializedName("event_type")
     val eventType: String? = null,
-    @SerialName("labels")
-    val labels: List<String?>? = null,
-    @SerialName("object_attributes")
+    @SerializedName("labels")
+    val labels: List<Any?>? = null,
+    @SerializedName("object_attributes")
     val objectAttributes: ObjectAttributes? = null,
-    @SerialName("object_kind")
+    @SerializedName("object_kind")
     val objectKind: String? = null,
-    @SerialName("project")
+    @SerializedName("project")
     val project: Project? = null,
-    @SerialName("repository")
+    @SerializedName("repository")
     val repository: Repository? = null,
-    @SerialName("user")
+    @SerializedName("user")
     val user: User? = null
 ) {
-    @Serializable
     data class Assignee(
-        @SerialName("avatar_url")
+        @SerializedName("avatar_url")
         val avatarUrl: String? = null,
-        @SerialName("email")
+        @SerializedName("email")
         val email: String? = null,
-        @SerialName("id")
+        @SerializedName("id")
         val id: Int? = null,
-        @SerialName("name")
+        @SerializedName("name")
         val name: String? = null,
-        @SerialName("username")
+        @SerializedName("username")
         val username: String? = null
     )
 
-    @Serializable
     class Changes
 
-    @Serializable
     data class ObjectAttributes(
-        @SerialName("assignee_id")
+        @SerializedName("assignee_id")
         val assigneeId: Int? = null,
-        @SerialName("assignee_ids")
+        @SerializedName("assignee_ids")
         val assigneeIds: List<Int?>? = null,
-        @SerialName("author_id")
+        @SerializedName("author_id")
         val authorId: Int? = null,
-        @SerialName("blocking_discussions_resolved")
+        @SerializedName("blocking_discussions_resolved")
         val blockingDiscussionsResolved: Boolean? = null,
-        @SerialName("created_at")
+        @SerializedName("created_at")
         val createdAt: String? = null,
-        @SerialName("description")
+        @SerializedName("description")
         val description: String? = null,
-        @SerialName("head_pipeline_id")
+        @SerializedName("head_pipeline_id")
         val headPipelineId: Int? = null,
-        @SerialName("human_time_change")
-        val humanTimeChange: String? = null,
-        @SerialName("human_time_estimate")
-        val humanTimeEstimate: String? = null,
-        @SerialName("human_total_time_spent")
-        val humanTotalTimeSpent: String? = null,
-        @SerialName("id")
+        @SerializedName("human_time_change")
+        val humanTimeChange: Any? = null,
+        @SerializedName("human_time_estimate")
+        val humanTimeEstimate: Any? = null,
+        @SerializedName("human_total_time_spent")
+        val humanTotalTimeSpent: Any? = null,
+        @SerializedName("id")
         val id: Int? = null,
-        @SerialName("iid")
+        @SerializedName("iid")
         val iid: Int? = null,
-        @SerialName("last_commit")
+        @SerializedName("last_commit")
         val lastCommit: LastCommit? = null,
-        @SerialName("last_edited_at")
-        val lastEditedAt: String? = null,
-        @SerialName("last_edited_by_id")
-        val lastEditedById: String? = null,
-        @SerialName("merge_commit_sha")
+        @SerializedName("last_edited_at")
+        val lastEditedAt: Any? = null,
+        @SerializedName("last_edited_by_id")
+        val lastEditedById: Any? = null,
+        @SerializedName("merge_commit_sha")
         val mergeCommitSha: String? = null,
-        @SerialName("merge_error")
-        val mergeError: String? = null,
-        @SerialName("merge_params")
+        @SerializedName("merge_error")
+        val mergeError: Any? = null,
+        @SerializedName("merge_params")
         val mergeParams: MergeParams? = null,
-        @SerialName("merge_status")
+        @SerializedName("merge_status")
         val mergeStatus: String? = null,
-        @SerialName("merge_user_id")
+        @SerializedName("merge_user_id")
         val mergeUserId: Int? = null,
-        @SerialName("merge_when_pipeline_succeeds")
+        @SerializedName("merge_when_pipeline_succeeds")
         val mergeWhenPipelineSucceeds: Boolean? = null,
-        @SerialName("milestone_id")
-        val milestoneId: String? = null,
-        @SerialName("source")
+        @SerializedName("milestone_id")
+        val milestoneId: Any? = null,
+        @SerializedName("source")
         val source: Source? = null,
-        @SerialName("source_branch")
+        @SerializedName("source_branch")
         val sourceBranch: String? = null,
-        @SerialName("source_project_id")
+        @SerializedName("source_project_id")
         val sourceProjectId: Int? = null,
-        @SerialName("state")
+        @SerializedName("state")
         val state: String? = null,
-        @SerialName("state_id")
+        @SerializedName("state_id")
         val stateId: Int? = null,
-        @SerialName("target")
+        @SerializedName("target")
         val target: Target? = null,
-        @SerialName("target_branch")
+        @SerializedName("target_branch")
         val targetBranch: String? = null,
-        @SerialName("target_project_id")
+        @SerializedName("target_project_id")
         val targetProjectId: Int? = null,
-        @SerialName("time_change")
+        @SerializedName("time_change")
         val timeChange: Int? = null,
-        @SerialName("time_estimate")
+        @SerializedName("time_estimate")
         val timeEstimate: Int? = null,
-        @SerialName("title")
+        @SerializedName("title")
         val title: String? = null,
-        @SerialName("total_time_spent")
+        @SerializedName("total_time_spent")
         val totalTimeSpent: Int? = null,
-        @SerialName("updated_at")
+        @SerializedName("updated_at")
         val updatedAt: String? = null,
-        @SerialName("updated_by_id")
-        val updatedById: String? = null,
-        @SerialName("url")
+        @SerializedName("updated_by_id")
+        val updatedById: Any? = null,
+        @SerializedName("url")
         val url: String? = null,
-        @SerialName("work_in_progress")
+        @SerializedName("work_in_progress")
         val workInProgress: Boolean? = null
     ) {
-        @Serializable
         data class LastCommit(
-            @SerialName("author")
+            @SerializedName("author")
             val author: Author? = null,
-            @SerialName("id")
+            @SerializedName("id")
             val id: String? = null,
-            @SerialName("message")
+            @SerializedName("message")
             val message: String? = null,
-            @SerialName("timestamp")
+            @SerializedName("timestamp")
             val timestamp: String? = null,
-            @SerialName("title")
+            @SerializedName("title")
             val title: String? = null,
-            @SerialName("url")
+            @SerializedName("url")
             val url: String? = null
         ) {
-            @Serializable
             data class Author(
-                @SerialName("email")
+                @SerializedName("email")
                 val email: String? = null,
-                @SerialName("name")
+                @SerializedName("name")
                 val name: String? = null
             )
         }
 
-        @Serializable
         data class MergeParams(
-            @SerialName("auto_merge_strategy")
+            @SerializedName("auto_merge_strategy")
             val autoMergeStrategy: String? = null,
-            @SerialName("commit_message")
+            @SerializedName("commit_message")
             val commitMessage: String? = null,
-            @SerialName("sha")
+            @SerializedName("sha")
             val sha: String? = null,
-            @SerialName("should_remove_source_branch")
+            @SerializedName("should_remove_source_branch")
             val shouldRemoveSourceBranch: Boolean? = null,
-            @SerialName("squash_commit_message")
+            @SerializedName("squash_commit_message")
             val squashCommitMessage: String? = null
         )
 
-        @Serializable
         data class Source(
-            @SerialName("avatar_url")
-            val avatarUrl: String? = null,
-            @SerialName("ci_config_path")
+            @SerializedName("avatar_url")
+            val avatarUrl: Any? = null,
+            @SerializedName("ci_config_path")
             val ciConfigPath: String? = null,
-            @SerialName("default_branch")
+            @SerializedName("default_branch")
             val defaultBranch: String? = null,
-            @SerialName("description")
+            @SerializedName("description")
             val description: String? = null,
-            @SerialName("git_http_url")
+            @SerializedName("git_http_url")
             val gitHttpUrl: String? = null,
-            @SerialName("git_ssh_url")
+            @SerializedName("git_ssh_url")
             val gitSshUrl: String? = null,
-            @SerialName("homepage")
+            @SerializedName("homepage")
             val homepage: String? = null,
-            @SerialName("http_url")
+            @SerializedName("http_url")
             val httpUrl: String? = null,
-            @SerialName("id")
+            @SerializedName("id")
             val id: Int? = null,
-            @SerialName("name")
+            @SerializedName("name")
             val name: String? = null,
-            @SerialName("namespace")
+            @SerializedName("namespace")
             val namespace: String? = null,
-            @SerialName("path_with_namespace")
+            @SerializedName("path_with_namespace")
             val pathWithNamespace: String? = null,
-            @SerialName("ssh_url")
+            @SerializedName("ssh_url")
             val sshUrl: String? = null,
-            @SerialName("url")
+            @SerializedName("url")
             val url: String? = null,
-            @SerialName("visibility_level")
+            @SerializedName("visibility_level")
             val visibilityLevel: Int? = null,
-            @SerialName("web_url")
+            @SerializedName("web_url")
             val webUrl: String? = null
         )
 
-        @Serializable
         data class Target(
-            @SerialName("avatar_url")
-            val avatarUrl: String? = null,
-            @SerialName("ci_config_path")
+            @SerializedName("avatar_url")
+            val avatarUrl: Any? = null,
+            @SerializedName("ci_config_path")
             val ciConfigPath: String? = null,
-            @SerialName("default_branch")
+            @SerializedName("default_branch")
             val defaultBranch: String? = null,
-            @SerialName("description")
+            @SerializedName("description")
             val description: String? = null,
-            @SerialName("git_http_url")
+            @SerializedName("git_http_url")
             val gitHttpUrl: String? = null,
-            @SerialName("git_ssh_url")
+            @SerializedName("git_ssh_url")
             val gitSshUrl: String? = null,
-            @SerialName("homepage")
+            @SerializedName("homepage")
             val homepage: String? = null,
-            @SerialName("http_url")
+            @SerializedName("http_url")
             val httpUrl: String? = null,
-            @SerialName("id")
+            @SerializedName("id")
             val id: Int? = null,
-            @SerialName("name")
+            @SerializedName("name")
             val name: String? = null,
-            @SerialName("namespace")
+            @SerializedName("namespace")
             val namespace: String? = null,
-            @SerialName("path_with_namespace")
+            @SerializedName("path_with_namespace")
             val pathWithNamespace: String? = null,
-            @SerialName("ssh_url")
+            @SerializedName("ssh_url")
             val sshUrl: String? = null,
-            @SerialName("url")
+            @SerializedName("url")
             val url: String? = null,
-            @SerialName("visibility_level")
+            @SerializedName("visibility_level")
             val visibilityLevel: Int? = null,
-            @SerialName("web_url")
+            @SerializedName("web_url")
             val webUrl: String? = null
         )
     }
 
-    @Serializable
     data class Project(
-        @SerialName("avatar_url")
-        val avatarUrl: String? = null,
-        @SerialName("ci_config_path")
+        @SerializedName("avatar_url")
+        val avatarUrl: Any? = null,
+        @SerializedName("ci_config_path")
         val ciConfigPath: String? = null,
-        @SerialName("default_branch")
+        @SerializedName("default_branch")
         val defaultBranch: String? = null,
-        @SerialName("description")
+        @SerializedName("description")
         val description: String? = null,
-        @SerialName("git_http_url")
+        @SerializedName("git_http_url")
         val gitHttpUrl: String? = null,
-        @SerialName("git_ssh_url")
+        @SerializedName("git_ssh_url")
         val gitSshUrl: String? = null,
-        @SerialName("homepage")
+        @SerializedName("homepage")
         val homepage: String? = null,
-        @SerialName("http_url")
+        @SerializedName("http_url")
         val httpUrl: String? = null,
-        @SerialName("id")
+        @SerializedName("id")
         val id: Int? = null,
-        @SerialName("name")
+        @SerializedName("name")
         val name: String? = null,
-        @SerialName("namespace")
+        @SerializedName("namespace")
         val namespace: String? = null,
-        @SerialName("path_with_namespace")
+        @SerializedName("path_with_namespace")
         val pathWithNamespace: String? = null,
-        @SerialName("ssh_url")
+        @SerializedName("ssh_url")
         val sshUrl: String? = null,
-        @SerialName("url")
+        @SerializedName("url")
         val url: String? = null,
-        @SerialName("visibility_level")
+        @SerializedName("visibility_level")
         val visibilityLevel: Int? = null,
-        @SerialName("web_url")
+        @SerializedName("web_url")
         val webUrl: String? = null
     )
 
-    @Serializable
     data class Repository(
-        @SerialName("description")
+        @SerializedName("description")
         val description: String? = null,
-        @SerialName("homepage")
+        @SerializedName("homepage")
         val homepage: String? = null,
-        @SerialName("name")
+        @SerializedName("name")
         val name: String? = null,
-        @SerialName("url")
+        @SerializedName("url")
         val url: String? = null
     )
 
-    @Serializable
     data class User(
-        @SerialName("avatar_url")
+        @SerializedName("avatar_url")
         val avatarUrl: String? = null,
-        @SerialName("email")
+        @SerializedName("email")
         val email: String? = null,
-        @SerialName("id")
+        @SerializedName("id")
         val id: Int? = null,
-        @SerialName("name")
+        @SerializedName("name")
         val name: String? = null,
-        @SerialName("username")
+        @SerializedName("username")
         val username: String? = null
     )
 }

@@ -3,7 +3,6 @@ package id.ade.ktorwebhooksample.routes
 import id.ade.ktorwebhooksample.models.Message
 import id.ade.ktorwebhooksample.models.receive.GitlabMergeRequestReceiver
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest
-import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.HEADER_TYPE
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.IMAGE_TYPE
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.MARKDOWN_TYPE
 import id.ade.ktorwebhooksample.models.request.SlackBodyRequest.Companion.SECTION_TYPE
@@ -12,8 +11,8 @@ import id.ade.ktorwebhooksample.utils.toJson
 import io.ktor.application.call
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.DEFAULT
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logger
@@ -22,28 +21,21 @@ import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.locations.KtorExperimentalLocationsAPI
-import io.ktor.locations.Location
-import io.ktor.locations.post
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Route
-import io.ktor.util.InternalAPI
+import io.ktor.routing.post
+import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 private const val API_VERSION = "/v1"
-const val GITLAB_WEBHOOK = "$API_VERSION/gitlab"
+private const val GITLAB_WEBHOOK = "$API_VERSION/gitlab"
 
-@KtorExperimentalLocationsAPI
-@Location(GITLAB_WEBHOOK)
-class GitlabWebhookRoute
-
-@OptIn(InternalAPI::class)
-@KtorExperimentalLocationsAPI
+@KtorExperimentalAPI
 fun Route.gitlabWebhook() {
-    post<GitlabWebhookRoute> {
+    post(GITLAB_WEBHOOK) {
         coroutineScope {
             val gitlabMergeRequestReceiver = call.receive<GitlabMergeRequestReceiver>()
             val client = createClient()
@@ -69,7 +61,7 @@ fun Route.gitlabWebhook() {
                                         SlackBodyRequest.Block.Field(
                                             text = "*Created by:*\n<https://gitlab.com/${gitlabMergeRequestReceiver.user?.username}|${gitlabMergeRequestReceiver.user?.name}>",
                                             type = MARKDOWN_TYPE
-                                        ),
+                                        )
                                     )
                                 ),
                                 SlackBodyRequest.Block(
@@ -104,12 +96,17 @@ fun Route.gitlabWebhook() {
     }
 }
 
+@KtorExperimentalAPI
 fun createClient(): HttpClient = HttpClient(CIO) {
     install(Logging) {
         logger = Logger.DEFAULT
         level = LogLevel.ALL
     }
     install(JsonFeature) {
-        serializer = KotlinxSerializer()
+        serializer = GsonSerializer {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+
+        }
     }
 }
