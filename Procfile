@@ -1,1 +1,0 @@
-web: ./build/install/id.ade.ktorwebhooksample/bin/id.ade.ktorwebhooksample

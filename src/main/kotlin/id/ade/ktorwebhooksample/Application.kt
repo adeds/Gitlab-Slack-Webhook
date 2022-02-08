@@ -1,7 +1,7 @@
 package id.ade.ktorwebhooksample
 
 import id.ade.ktorwebhooksample.routes.gitlabWebhook
-import io.kotless.dsl.ktor.Kotless
+import io.kotless.dsl.ktor.KotlessAWS
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
@@ -10,7 +10,7 @@ import io.ktor.routing.routing
 import kotlin.time.ExperimentalTime
 
 @Suppress("unused")
-class Server : Kotless() {
+class Server : KotlessAWS() {
 
     @OptIn(ExperimentalTime::class)
     override fun prepare(app: Application) {
